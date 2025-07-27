@@ -62,6 +62,47 @@ console.log(await client.lRange('mylist', 0, -1)); // [2,1,a]
      const getUpdatedUserNickNames = await client.sMembers("user:nickName");
      console.log(getUpdatedUserNickNames);
 
+//soorted sets maintain order of the sets by redis so it would help in leadersboars
+//sorted sets
+    // ZADD, ZRANGE, ZRANK, ZREM
+
+    // await client.zAdd("cart" key value , [then passed aray which will associate to key
+    //   {
+    //     score: 100,
+    //     value: "Cart 1",
+    //   },
+    //   {
+    //     score: 150,
+    //     value: "Cart 2",
+    //   },
+    //   {
+    //     score: 10,
+    //     value: "Cart 3",
+    //   },
+    // ]);
+
+//STORE THT CART KEY VALEUS BY INDEXING TO CONST TO PRINT IT OR LOG IT RANK WISE OR SCOREWISE
+
+
+    // const getCartItems = await client.zRange("cart", 0, -1);
+    // console.log(getCartItems);
+
+    //WITH SCORE VALUES 
+
+
+    // const extractAllCartItemsWithScore = await client.zRangeWithScores(
+    //   "cart",
+    //   0,
+    //   -1
+    // );
+    // console.log(extractAllCartItemsWithScore);
+
+    //WIRH RANK  OF SPEFOC RANK OF CAET 2 ASSOOCATED RTO CART KEY
+    
+    // const cartTwoRank = await client.zRank("cart", "Cart 2");
+    // console.log(cartTwoRank);
+
+
 
 
 } catch (error) {
