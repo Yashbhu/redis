@@ -98,17 +98,36 @@ console.log(await client.lRange('mylist', 0, -1)); // [2,1,a]
     // console.log(extractAllCartItemsWithScore);
 
     //WIRH RANK  OF SPEFOC RANK OF CAET 2 ASSOOCATED RTO CART KEY
-    
+
     // const cartTwoRank = await client.zRank("cart", "Cart 2");
     // console.log(cartTwoRank);
+ //hashes -> HSET, HGET, HGETALL, HDEL
 
+    await client.hSet("product:1", {
+      name: "Product 1",
+      description: "product one description",
+      rating: "5",
+    });
 
+    const getProductRating = await client.hGet("product:1", "rating");
+    console.log(getProductRating);
 
+    const getProductDetails = await client.hGetAll("product:1");
+    console.log(getProductDetails);
 
-} catch (error) {
-        console.log(error)
-    }finaly{
-        client.quit()
-    }
+    await client.hDel("product:1", "rating");
+
+    const updatedProductDetails = await client.hGetAll("product:1");
+    console.log(updatedProductDetails);
+
+    
+  } catch (e) {
+    console.error(e);
+  } finally {
+    client.quit();
+  }
 }
-redisdatastructure()
+
+redisDataStructures();
+
+
