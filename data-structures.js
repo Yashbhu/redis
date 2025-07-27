@@ -45,6 +45,22 @@ console.log(await client.rPop('mylist')); // b
 console.log(await client.lRange('mylist', 0, -1)); // [2,1,a]
 
 
+// sets -> SADD, SMEMBERS, SISMEMBER, SREM
+    await client.sAdd("user:nickName", ["john", "varun", "xyz"]);
+     const extractUserNicknames = await client.sMembers("user:nickName");
+
+     console.log(extractUserNicknames);
+
+     const isVarunIsOneOfUserNickName = await client.sIsMember(
+       "user:nickName",
+       "varun"
+     );
+     console.log(isVarunIsOneOfUserNickName);
+
+     await client.sRem("user:nickName", "xyz");
+
+     const getUpdatedUserNickNames = await client.sMembers("user:nickName");
+     console.log(getUpdatedUserNickNames);
 
 
 
