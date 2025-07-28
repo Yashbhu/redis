@@ -59,6 +59,47 @@ async function testAdditionalFeatures() {
         multi.get("key-pipeline2");
 
 
+        //bacth data operatiobn 
+        const pipelineOne = client.multi();
+
+    for (let i = 0; i < 1000; i++) {
+      pipelineOne.set(`user:${i}:action`, `Action ${i}`);
+    }
+
+    await pipelineOne.exec();
+
+    const dummyExample = client.multi();
+    dummyExample.decrBy('account:1234:balance', 100);
+    dummyExample.incrBy('account:0000:balance', 100);
+
+    const finalresults = await dummyExample.exec();
+
+    const cartExample = client.multi();
+    cartExample.hIncrBy('cart:1234', 'item_count', 1);
+    cartExample.hIncrBy('cart:1234', 'total_price', 10);
+
+    await cartExample.exec();
+
+    console.log("Performance test");
+    console.time("without pipelining");
+
+    for (let i = 0; i < 1000; i++) {
+      await client.set(`user${i}`, `user_value${i}`);
+    }
+
+    console.timeEnd("without pipelining");
+
+    console.time("with pipelining");
+    const bigPipeline = client.multi();
+
+    for (let i = 0; i < 1000; i++) {
+      bigPipeline.set(`user_pipeline_key${i}`, `user_pipeline_value${i}`);
+    }
+
+    await bigPipeline.exec();
+    console.timeEnd("with pipelining");
+
+
 
 
 
